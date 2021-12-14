@@ -28,7 +28,7 @@ class Color(commands.Cog):
 
         return closest_match
 
-    def display_color_info(self, rgb, hex):
+    def display_color_info(self, rgb, hex) -> tuple:
         r, g, b = rgb
         im = Image.new(mode="RGB", size=(200, 200), color=tuple(rgb))
         buffer = BytesIO()
@@ -44,13 +44,13 @@ class Color(commands.Cog):
         return file, embed
 
     @commands.command()
-    async def getcolor(self, ctx, *, color: ColorConverter):
+    async def getcolor(self, ctx, *, color: ColorConverter) -> discord.Message:
         rgb, hex = color
         file, embed = self.display_color_info(rgb, hex)
         await ctx.reply(file=file, embed=embed)
 
     @commands.command()
-    async def randomcolor(self, ctx):
+    async def randomcolor(self, ctx) -> discord.Message:
         rgb = [rand(0, 255), rand(0, 255), rand(0, 255)]
         hex = self.colorconverter.rgb_to_hex(rgb)
         file, embed = self.display_color_info(rgb, hex)
